@@ -21,6 +21,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+execute "Make sure the current user #{node['current_user']} owns /Users/#{node['current_user']}/.atom" do
+  command "chown -R #{node['current_user']} /Users/#{node['current_user']}/.atom"
+  only_if do ::File.exists?("/Users/#{node['current_user']}/.atom") end
+end
+
 node['apm']['packages'].each do |package|
   apm_package package
 end
