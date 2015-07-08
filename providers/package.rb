@@ -5,8 +5,9 @@ use_inline_resources if defined?(use_inline_resources)
 action :install do
   pkg_id = new_resource.name
   pkg_id += "@#{new_resource.version}" if new_resource.version
-  execute "install APM package #{new_resource.name}" do
-    command "apm install #{pkg_id}"
+  execute "install APM package #{new_resource.name} for #{node['current_user']}" do
+    user node['current_user']
+    command "sudo -u #{node['current_user']} apm install #{pkg_id}"
     not_if "apm --no-color ls '#{pkg_id}' 2> /dev/null | grep ' #{pkg_id}'"
   end
 end
