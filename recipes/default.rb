@@ -22,9 +22,9 @@
 # limitations under the License.
 #
 
-execute "Make sure the current user #{node['current_user']} owns /Users/#{node['current_user']}/.atom" do
-  command "chown -R #{node['current_user']} /Users/#{node['current_user']}/.atom"
-  only_if do ::File.exists?("/Users/#{node['current_user']}/.atom") end
+execute "Make sure the current user #{node['user']['id']} owns /Users/#{node['user']['id']}/.atom" do
+  command "chown -R #{node['user']['id']} /Users/#{node['user']['id']}/.atom"
+  only_if do ::File.exists?("/Users/#{node['user']['id']}/.atom") end
 end
 
 node['apm']['packages'].each do |package|
